@@ -37,3 +37,14 @@ RUN dpkg --add-architecture i386 && \
   apt-get autoremove -y --purge && \
   apt-get clean -y  && \
   rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
+  
+RUN useradd -u 1001 -d /home/wine -m -s /bin/bash wine && \
+    mkdir /tmp/.X11-unix && \
+    chmod 1777 /tmp/.X11-unix
+    
+ENV HOME=/home/wine \
+    WINEPREFIX=/home/wine/.wine \
+    WINEARCH=win32
+
+WORKDIR /home/wine
+USER wine
